@@ -1,2 +1,6 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+
+body {
+    color: #4a2d24
+}
