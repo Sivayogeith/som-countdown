@@ -18,10 +18,12 @@
     distance: 0,
   };
 
-  const shippingEnd = new Date("2025-10-02T03:59:59.000Z");
+  const devlogAndNewProjectEnd = new Date("2025-10-02T03:59:59.000Z");
+  const shippingEnd = new Date("2025-10-03T03:59:59.000Z");
   const votingEnd = new Date("2025-10-07T03:59:59.000Z");
   const shopEnd = new Date("2025-10-11T03:59:59.000Z");
 
+  let devlogAndNewProjectTimeCalc: TimeCalc = $state(DEFAULT_TIMECALC);
   let shippingTimeCalc: TimeCalc = $state(DEFAULT_TIMECALC);
   let votingTimeCalc: TimeCalc = $state(DEFAULT_TIMECALC);
   let shopTimeCalc: TimeCalc = $state(DEFAULT_TIMECALC);
@@ -29,6 +31,7 @@
   const countdownInterval = setInterval(function () {
     let now = new Date().getTime();
 
+    devlogAndNewProjectTimeCalc = getTime(devlogAndNewProjectEnd.getTime() - now);
     shippingTimeCalc = getTime(shippingEnd.getTime() - now);
     votingTimeCalc = getTime(votingEnd.getTime() - now);
     shopTimeCalc = getTime(shopEnd.getTime() - now);
@@ -52,6 +55,7 @@
   onMount(() => {
     let now = new Date().getTime();
 
+    devlogAndNewProjectTimeCalc = getTime(devlogAndNewProjectEnd.getTime() - now);
     shippingTimeCalc = getTime(shippingEnd.getTime() - now);
     votingTimeCalc = getTime(votingEnd.getTime() - now);
     shopTimeCalc = getTime(shopEnd.getTime() - now);
@@ -59,11 +63,26 @@
 </script>
 
 <h1 class="text-6xl saira-stencil text-center mt-10">
-  When does Summer of Making <span class="text-red-800">END</span>?
+  When does Summer of Making <span class="text-red-800">END</span>? <span class="text-3xl">by sage with :3</span>
 </h1>
-<div class="flex items-center flex-col md:h-[82dvh] gap-10 p-12">
+<div class="flex items-center flex-col md:h-[82dvh] gap-10 p-12 text-center">
   <img src={favicon} class="h-[15rem] w-auto" alt="AAAAAAAApheus by @ren">
-  <div class="w-[70vw] 2xl:ms-[28vw]">
+  <div class="w-[70vw]">
+    <h2 class="text-4xl">
+      Devlogging and New Projects ends in <span class="text-2xl"
+        >(at {devlogAndNewProjectEnd.toLocaleString()} in your timezone)</span
+      >
+    </h2>
+    <h2 class="text-5xl font-bold text-red-800">
+      {#if devlogAndNewProjectTimeCalc.distance < 0}
+        DEVLOGGING AND NEW PROJECTS HAS ENDED!!!
+      {:else}
+        {devlogAndNewProjectTimeCalc.days} days {devlogAndNewProjectTimeCalc.hours} hours {devlogAndNewProjectTimeCalc.minutes}
+        minutes {devlogAndNewProjectTimeCalc.seconds} seconds
+      {/if}
+    </h2>
+  </div>
+  <div class="w-[70vw]">
     <h2 class="text-4xl">
       Shipping ends in <span class="text-2xl"
         >(at {shippingEnd.toLocaleString()} in your timezone)</span
@@ -78,7 +97,7 @@
       {/if}
     </h2>
   </div>
-  <div class="w-[70vw] 2xl:ms-[28vw]">
+  <div class="w-[70vw]">
     <h2 class="text-4xl">
       Voting ends in <span class="text-2xl"
         >(at {votingEnd.toLocaleString()} in your timezone)</span
@@ -93,7 +112,7 @@
       {/if}
     </h2>
   </div>
-  <div class="w-[70vw] 2xl:ms-[28vw]">
+  <div class="w-[70vw]">
     <h2 class="text-4xl">
       Shop closes in <span class="text-2xl"
         >(at {shopEnd.toLocaleString()} in your timezone)</span
@@ -109,4 +128,3 @@
     </h2>
   </div>
 </div>
-<footer class="text-2xl text-center mb-5">by sage with :3</footer>
